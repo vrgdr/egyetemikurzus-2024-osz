@@ -1,6 +1,6 @@
 # SZTE egyetemi kurzus, 2024 Őszi félév házi feleadat repó
 
-Git gyorstalpaló:
+Git gyorstalpaló: https://github.com/CsharptutorialHungary/egyetemikurzus-2024-osz/tree/main/.git-tutorial
 
 ## Technikai követelmények
 
