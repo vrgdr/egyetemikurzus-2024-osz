@@ -24,7 +24,7 @@ namespace JCY9ZR
             SpawnFruit();
         }
 
-        public void Run()
+        public int Run()
         {
             gameRunning = true;
             while (gameRunning)
@@ -38,6 +38,12 @@ namespace JCY9ZR
             Console.Clear();
             Console.WriteLine("Game Over!");
             Console.WriteLine($"Final Score: {score}");
+
+            var gameState = new GameState(DateTime.Now, score);
+            GameRepository.SaveScore(gameState);
+            Console.WriteLine("Score saved successfully!");
+
+            return score;
         }
 
         private void SpawnFruit()
