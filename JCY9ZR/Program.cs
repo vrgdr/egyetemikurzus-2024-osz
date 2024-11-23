@@ -1,9 +1,11 @@
-﻿class Program
+﻿namespace JCY9ZR
 {
-    static void Main(string[] args)
+    class Program
     {
-        var game = new SnakeGame(40, 20);
-        game.Draw();
-        Console.ReadKey();
+        static void Main(string[] args)
+        {
+            var game = new SnakeGame(40, 20);
+            game.Run();
+        }
     }
 }
