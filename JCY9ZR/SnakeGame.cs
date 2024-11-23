@@ -69,7 +69,14 @@ namespace JCY9ZR
         {
             var newHead = (X: snake[0].X + direction.X, Y: snake[0].Y + direction.Y);
             snake.Insert(0, newHead);
-            snake.RemoveAt(snake.Count - 1);
+            if (newHead == fruit)
+            {
+                SpawnFruit();
+            }
+            else
+            {
+                snake.RemoveAt(snake.Count - 1);
+            }
         }
 
         private void HandleInput()
@@ -86,5 +93,7 @@ namespace JCY9ZR
                 _ => direction
             };
         }
+
+       
     }
 }
