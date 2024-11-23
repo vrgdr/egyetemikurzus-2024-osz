@@ -27,6 +27,7 @@ namespace JCY9ZR
             while (true)
             {
                 Draw();
+                HandleInput();
                 Update();
                 Thread.Sleep(100);
             }
@@ -69,6 +70,21 @@ namespace JCY9ZR
             var newHead = (X: snake[0].X + direction.X, Y: snake[0].Y + direction.Y);
             snake.Insert(0, newHead);
             snake.RemoveAt(snake.Count - 1);
+        }
+
+        private void HandleInput()
+        {
+            if (!Console.KeyAvailable) return;
+
+            var key = Console.ReadKey(true).Key;
+            direction = key switch
+            {
+                ConsoleKey.UpArrow => (0, -1),
+                ConsoleKey.DownArrow => (0, 1),
+                ConsoleKey.LeftArrow => (-1, 0),
+                ConsoleKey.RightArrow => (1, 0),
+                _ => direction
+            };
         }
     }
 }
