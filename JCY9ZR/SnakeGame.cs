@@ -12,6 +12,8 @@ namespace JCY9ZR
         private (int X, int Y) fruit;
         private Random random;
         private (int X, int Y) direction = (0, -1); //moving up 
+        private int score;
+        private bool gameRunning;
 
         public SnakeGame(int width, int height)
         {
@@ -24,13 +26,18 @@ namespace JCY9ZR
 
         public void Run()
         {
-            while (true)
+            gameRunning = true;
+            while (gameRunning)
             {
                 Draw();
+                DrawScore();
                 HandleInput();
                 Update();
                 Thread.Sleep(100);
             }
+            Console.Clear();
+            Console.WriteLine("Game Over!");
+            Console.WriteLine($"Final Score: {score}");
         }
 
         private void SpawnFruit()
@@ -65,12 +72,24 @@ namespace JCY9ZR
             Console.Write("O");
         }
 
+        private void DrawScore()
+        {
+            Console.SetCursorPosition(0, height + 1);
+            Console.Write($"Score: {score}");
+        }
+
         private void Update()
         {
             var newHead = (X: snake[0].X + direction.X, Y: snake[0].Y + direction.Y);
+            if (newHead.X <= 0 || newHead.X >= width || newHead.Y <= 0 || newHead.Y >= height || snake.Contains(newHead))
+            {
+                gameRunning = false;
+                return;
+            }
             snake.Insert(0, newHead);
             if (newHead == fruit)
             {
+                score++;
                 SpawnFruit();
             }
             else
