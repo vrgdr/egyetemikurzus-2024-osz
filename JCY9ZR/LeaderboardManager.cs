@@ -15,7 +15,6 @@ namespace JCY9ZR
                 .Take(topCount)
                 .ToList();
 
-            Console.WriteLine("Leaderboard:");
             foreach (var score in topScores)
             {
                 Console.WriteLine($"{score.Timestamp:yyyy-MM-dd HH:mm:ss} - Score: {score.Score}");

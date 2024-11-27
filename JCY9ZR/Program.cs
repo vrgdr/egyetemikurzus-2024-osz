@@ -17,8 +17,10 @@ namespace JCY9ZR
                 var finalScore = game.Run();
 
                 GameRepository.SaveScore(new GameState(DateTime.Now, finalScore));
+                Console.WriteLine("Score saved successfully!\n");
 
-                LeaderboardManager.DisplayTopScores(leaderboard, 5);
+                Console.WriteLine("Leaderboard:");
+                LeaderboardManager.DisplayTopScores(leaderboard, 3);
             }
             catch (Exception ex)
             {

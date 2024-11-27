@@ -22,36 +22,29 @@ namespace JCY9ZR
             snake = new List<(int X, int Y)> { (width / 2, height / 2) };
             random = new Random();
             SpawnFruit();
+            gameRunning = true;
         }
 
         public int Run()
         {
-            gameRunning = true;
             while (gameRunning)
             {
-                Draw();
+                DrawField();
+                DrawSnake();
+                DrawFruit();
                 DrawScore();
                 HandleInput();
                 Update();
-                Thread.Sleep(100);
+                Thread.Sleep(100); //speed
             }
             Console.Clear();
             Console.WriteLine("Game Over!");
             Console.WriteLine($"Final Score: {score}");
 
-            var gameState = new GameState(DateTime.Now, score);
-            GameRepository.SaveScore(gameState);
-            Console.WriteLine("Score saved successfully!");
-
             return score;
         }
 
-        private void SpawnFruit()
-        {
-            fruit = (random.Next(1, width - 1), random.Next(1, height - 1));
-        }
-
-        public void Draw()
+        public void DrawField()
         {
             Console.Clear();
             for (int x = 0; x <= width; x++)
@@ -69,11 +62,24 @@ namespace JCY9ZR
                 Console.SetCursorPosition(width, y);
                 Console.Write("#");
             }
+        }
+
+        private void DrawSnake()
+        {
             foreach (var segment in snake)
             {
                 Console.SetCursorPosition(segment.X, segment.Y);
                 Console.Write("■");
             }
+        }
+
+        private void SpawnFruit()
+        {
+            fruit = (random.Next(1, width - 1), random.Next(1, height - 1));
+        }
+
+        private void DrawFruit()
+        {
             Console.SetCursorPosition(fruit.X, fruit.Y);
             Console.Write("O");
         }
@@ -87,12 +93,15 @@ namespace JCY9ZR
         private void Update()
         {
             var newHead = (X: snake[0].X + direction.X, Y: snake[0].Y + direction.Y);
+            
             if (newHead.X <= 0 || newHead.X >= width || newHead.Y <= 0 || newHead.Y >= height || snake.Contains(newHead))
             {
                 gameRunning = false;
                 return;
             }
+
             snake.Insert(0, newHead);
+
             if (newHead == fruit)
             {
                 score++;
